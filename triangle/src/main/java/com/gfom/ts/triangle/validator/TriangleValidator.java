@@ -1,6 +1,7 @@
 package com.gfom.ts.triangle.validator;
 
 import com.gfom.ts.triangle.Triangle;
+import com.gfom.ts.triangle.TriangleType;
 
 /**
  * Important considerations: <br/>
@@ -27,7 +28,10 @@ public class TriangleValidator {
 	 * @return
 	 */
 	public static boolean checkTriangleSides(long sideA, long sideB, long sideC) {
-		return false;
+		if (sideA <= 0 || sideB <= 0 || sideC <= 0) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -39,5 +43,46 @@ public class TriangleValidator {
 	 */
 	public static boolean checkTriangle(Triangle t) {
 		return checkTriangleSides(t.getSideA(), t.getSideB(), t.getSideC());
+	}
+
+	/**
+	 * main checker method
+	 * 
+	 * @return
+	 * @throws IllegalArgumentException
+	 *             If the object does not qualify as an triangle, although it is
+	 *             an uncheck exception it is made explicit to aid clients
+	 */
+	public static TriangleType classifyTriangle(Triangle triangle) throws IllegalArgumentException {
+		if (checkTriangle(triangle)) {
+			throw new IllegalArgumentException("The object does not classify as a triangle");
+		}
+
+		// first check if it is equilateral as it is faster
+		if (isEquilateral(triangle)) {
+			return TriangleType.equilateral;
+		}
+		if (isIsoceles(triangle)) {
+			return TriangleType.isosceles;
+		}
+		// if it is a Triangle and if it is nothing else then it must be
+		// scalene;
+		return TriangleType.scalene;
+
+	}
+
+	private static boolean isIsoceles(Triangle triangle) {
+		boolean aEqualsB = triangle.getSideA() == triangle.getSideB();
+		boolean aEqualsC = triangle.getSideA() == triangle.getSideC();
+
+		/*
+		 * ATTENTION: use of XOR, one must be true and the other must be false.
+		 */
+		return aEqualsB ^ aEqualsC;
+	}
+
+	private static boolean isEquilateral(Triangle triangle) {
+		// if A = B = C then true
+		return (triangle.getSideA() == triangle.getSideB()) && (triangle.getSideB() == triangle.getSideC());
 	}
 }
