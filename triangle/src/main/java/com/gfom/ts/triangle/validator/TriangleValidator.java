@@ -54,7 +54,7 @@ public class TriangleValidator {
 	 *             an uncheck exception it is made explicit to aid clients
 	 */
 	public static TriangleType classifyTriangle(Triangle triangle) throws IllegalArgumentException {
-		if (checkTriangle(triangle)) {
+		if (!checkTriangle(triangle)) {
 			throw new IllegalArgumentException("The object does not classify as a triangle");
 		}
 
@@ -74,11 +74,12 @@ public class TriangleValidator {
 	private static boolean isIsoceles(Triangle triangle) {
 		boolean aEqualsB = triangle.getSideA() == triangle.getSideB();
 		boolean aEqualsC = triangle.getSideA() == triangle.getSideC();
+		boolean bEqualsC = triangle.getSideB() == triangle.getSideC();
 
 		/*
-		 * ATTENTION: use of XOR, one must be true and the other must be false.
+		 * ATTENTION: use of XOR, one must be true and the others must be false.
 		 */
-		return aEqualsB ^ aEqualsC;
+		return aEqualsB ^ aEqualsC ^ bEqualsC;
 	}
 
 	private static boolean isEquilateral(Triangle triangle) {
