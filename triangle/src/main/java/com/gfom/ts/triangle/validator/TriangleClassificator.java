@@ -14,41 +14,18 @@ import com.gfom.ts.triangle.TriangleType;
  * be a valid triangle as well
  * 
  * @see Triangle
+ * @see TriangleType
  * @author gilmatias
  *
  */
-public class TriangleValidator {
-
-	/**
-	 * basic checker
-	 * 
-	 * @param sideA
-	 * @param sideB
-	 * @param sideC
-	 * @return
-	 */
-	public static boolean checkTriangleSides(long sideA, long sideB, long sideC) {
-		if (sideA <= 0 || sideB <= 0 || sideC <= 0) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * basic checker for triangle Objects
-	 * 
-	 * @see Triangle
-	 * @param t
-	 * @return
-	 */
-	public static boolean checkTriangle(Triangle t) {
-		return checkTriangleSides(t.getSideA(), t.getSideB(), t.getSideC());
-	}
+public class TriangleClassificator {
 
 	/**
 	 * main checker method
 	 * 
-	 * @return
+	 * @return A TriangleType corresponding with the object
+	 * @see TriangleType
+	 * @see Triangle
 	 * @throws IllegalArgumentException
 	 *             If the object does not qualify as an triangle, although it is
 	 *             an uncheck exception it is made explicit to aid clients
@@ -69,6 +46,17 @@ public class TriangleValidator {
 		// scalene;
 		return TriangleType.scalene;
 
+	}
+
+	private static boolean checkTriangleSides(long sideA, long sideB, long sideC) {
+		if (sideA <= 0 || sideB <= 0 || sideC <= 0) {
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean checkTriangle(Triangle t) {
+		return checkTriangleSides(t.getSideA(), t.getSideB(), t.getSideC());
 	}
 
 	private static boolean isIsoceles(Triangle triangle) {
