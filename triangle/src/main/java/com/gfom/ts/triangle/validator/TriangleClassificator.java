@@ -67,7 +67,7 @@ public class TriangleClassificator {
 		/*
 		 * ATTENTION: use of XOR, one must be true and the others must be false.
 		 */
-		return aEqualsB ^ aEqualsC ^ bEqualsC;
+		return (aEqualsB ^ aEqualsC ^ bEqualsC) ^ (aEqualsB && aEqualsC && bEqualsC);
 	}
 
 	private static boolean isEquilateral(Triangle triangle) {
